@@ -1,0 +1,76 @@
+<?php
+		if ($id != $pid) {
+		?>
+		<?php
+
+		$sqlr1 = "SELECT * from journey where pid=$pid and jid=$jid";
+
+		$resultr1 = mysqli_query($con, $sqlr1);
+
+		if (mysqli_num_rows($resultr1)) {
+			while ($rows = mysqli_fetch_assoc($resultr1)) {
+				if (strtotime($rows['dt']) < strtotime($dt)) {
+					?>
+					<div class="w3-quarter w3-padding">
+						<div class="w3-padding w3-center w3-card-4 w3-round-large">
+							<h1 class="w3-center w3-text-blue w3-small">Rate Your Journey !</h1>
+							<div class="w3-panel w3-padding">
+								<?php
+											$ratej = "SELECT * from partner where pid=$pid and jid=$jid and partid=$id";
+
+											$resratej = mysqli_query($con, $ratej);
+
+											if (mysqli_num_rows($resratej)) {
+												while ($rows = mysqli_fetch_assoc($resratej)) {
+													if ($rows['ratej'] == 'NULL') {
+														?>
+											<form class="w3-padding" action="inc/ratejourney.inc.php?pid=<?php echo $pid; ?>&jid=<?php echo $jid; ?>&partid=<?php echo $id; ?>" method="post">
+												<select class="w3-padding w3-border-white" name="rating">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option selected value="5">5</option>
+												</select>
+												<input type="submit" name="rate" value="Rate" class="w3-button w3-padding w3-text-white w3-red w3-hover-green w3-round-large">
+											</form>
+										<?php
+															} else {
+																?>
+											<p class="w3-indigo w3-text-white w3-padding w3-round-large">Your Rating : <?php echo $rows['ratej']; ?> </p>
+								<?php
+													}
+												}
+											}
+											?>
+											<?php
+																	if (isset($_GET['success'])) {
+																		if ($_GET['success'] == 'journey') {
+																			?>
+													<p class="w3-indigo w3-text-white w3-padding w3-round-large">Thanks For Your Rating About Journey !</p>
+													<?php
+															}
+														}
+														?>
+							</div>
+							<h1 class="w3-center w3-text-blue w3-small">Rate Your Partner !</h1>
+							<div class="w3-panel w3-padding">
+								<form class="w3-padding" action="inc/ratepartner.inc.php?pid=<?php echo $pid; ?>" method="post">
+									<select class="w3-padding w3-border-white" name="rating">
+										<option value="1">1</option>
+										<option value="2">2</option>
+										<option value="3">3</option>
+										<option value="4">4</option>
+										<option selected value="5">5</option>
+									</select>
+									<input type="submit" name="rate" value="Rate" class="w3-button w3-padding w3-text-white w3-red w3-hover-green w3-round-large">
+								</form>
+							</div>
+						</div>
+					</div>
+		<?php
+				}
+			}
+		}
+	}
+		?>

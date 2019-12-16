@@ -31,7 +31,7 @@
     <link rel="stylesheet" href="css/style.css">
     <link href="https://fonts.googleapis.com/css?family=Farro&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css?family=Blinker&display=swap" rel="stylesheet">
-    <title>Profile - Journey Mate</title>
+    <title>Add Journey - Journey Mate</title>
      <link rel="stylesheet" href="css/design.css">
 
 <!-- jQuery library -->
@@ -165,6 +165,26 @@ li{
     opacity: 0.5;
   }
 }
+::-webkit-scrollbar {
+			width: 10px;
+		}
+
+		/* Track */
+		::-webkit-scrollbar-track {
+			box-shadow: inset 0 0 5px white;
+			border-radius: 10px;
+		}
+
+		/* Handle */
+		::-webkit-scrollbar-thumb {
+			background: red;
+			border-radius: 10px;
+		}
+
+		/* Handle on hover */
+		::-webkit-scrollbar-thumb:hover {
+			background: #b30000;
+		}
      </style>
 </head>
 <body>
@@ -203,7 +223,10 @@ li{
 			<input class="w3-padding w3-round-large w3-border w3-panel" type="date" name="date" style="width: 220px;" id="date"><br>
 			<label class="w3-padding w3-tag w3-panel w3-round-large"><b>Time :</b></label>
 			<input class="w3-padding w3-round-large w3-border w3-panel" type="time" name="time" style="width: 220px;"><br>
-			<p class="w3-tiny w3-text-red" style="margin-top: -10px;"><b>Enter in 24hrs format *</b></p>
+      <p class="w3-tiny w3-text-red" style="margin-top: -10px;"><b>Enter in 24hrs format *</b></p>
+      <label class="w3-padding w3-tag w3-panel w3-round-large"><b>Price :</b></label>
+      <input class="w3-padding w3-round-large w3-border w3-panel" type="text" name="amt" placeholder="Enter Expected amount" style="width: 220px;"><br>
+      <p class="w3-tiny w3-text-red" style="margin-top: -10px;"><b>Enter amount per head in ruppes *</b></p>
       <label class="w3-padding w3-tag w3-panel w3-round-large"><b>Note :</b></label><br>
       <textarea class="w3-padding w3-round-large w3-border w3-panel"  style="resize: none;" rows="4" cols="25" name="desc" ></textarea><br>
       <p class="w3-tiny w3-text-red" style="margin-top: -10px;"><b>Enter Any Description *</b></p>

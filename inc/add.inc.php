@@ -10,10 +10,11 @@
 			$seat = $_POST['seat'];
 			$date = $_POST['date'];
 			$time = $_POST['time'];	
+			$amt = $_POST['amt'];
 			$desc = $_POST['desc'];				
 			$dt = $date.' '.$time;
 
-			if (empty($from) || empty($to) || empty($seat) || empty($date) || empty($time)) {
+			if (empty($from) || empty($to) || empty($seat) || empty($date) || empty($time) || empty($amt)) {
 					header("location:../addT.php?error=fillall&from=".$from."&to=".$to."&seat=".$seat);
 					exit();
 				}else{
@@ -29,19 +30,19 @@
 						$sql="SELECT * FROM journey";
 						$stmt = mysqli_stmt_init($con);
 						if(!mysqli_stmt_prepare($stmt,$sql)){
-							header("Location:../addT.php?error=sqlerror1");
+							header("Location:../addT.php?error=sqlerror1&from=".$from."&to=".$to);
 							exit();
 						}
 						else{
-							$sql="INSERT INTO journey (pid,fp,tp,seat,dt,des) VALUES(?,?,?,?,?,?)";
+							$sql="INSERT INTO journey (pid,fp,tp,seat,dt,amt,des) VALUES(?,?,?,?,?,?,?)";
 							$stmt = mysqli_stmt_init($con);
 							if(!mysqli_stmt_prepare($stmt,$sql)){
-								header("Location:../addT.php?error=sqlerror2");
+								header("Location:../addT.php?error=sqlerror2&from=".$from."&to=".$to);
 								exit();
 							}
 							else{
 								echo $date;
-								$stmt->bind_param("ssssss",$id,$from,$to,$seat,$dt,$desc);
+								$stmt->bind_param("sssssss",$id,$from,$to,$seat,$dt,$amt,$desc);
 								mysqli_stmt_execute($stmt);
 								mysqli_stmt_close($stmt);
 								mysqli_close($con);

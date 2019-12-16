@@ -62,7 +62,7 @@
     <a href="profile.php" class="w3-small w3-center w3-hover-text-blue  w3-round-large w3-hover-text-blue w3-hover-white w3-text-white w3-bar-item "><b>Profile</b></a>
     <?php endif ?>
     <?php if ($_SERVER['PHP_SELF'] == '/journeymate/main.php'): ?>
-     <form method="post" action="logout.php">
+    <form method="post" action="logout.php">
         <b><input class="w3-small w3-center w3-hover-text-blue w3-button  w3-round-large w3-hover-text-blue w3-hover-white w3-text-white w3-bar-item " type="submit" name="logout" value="Logout"></b>
     </form>
     <?php endif ?>

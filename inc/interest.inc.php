@@ -19,7 +19,7 @@
 			exit();
 		}
 		else{
-			$sql1 = "INSERT into partner Values('$jid','$pid','$partid')";
+			$sql1 = "INSERT into partner(jid,pid,partid) Values('$jid','$pid','$partid')";
 
 			mysqli_query($con,$sql1);
 			header("location:../detail.php?&pid=".$pid."&jid=".$jid);

@@ -73,6 +73,13 @@
 						$hashpwd = password_hash($password1, PASSWORD_DEFAULT);
 						$stmt->bind_param("sssssssss",ucfirst($fname),ucfirst($lname),$email,$gender,$dob,$diff->format('%y'),$number,$hashpwd,$rnd_id);
 						mysqli_stmt_execute($stmt);
+
+						$mailto = $email;
+						$subject = "Account created in Journey Mate";
+						$message = "You have created an account in Journey Mate ! Thank you for joining. Have a safe journey";
+						$headers = "From: admin@journeymate.ga";
+
+						mail($mailto,$subject,$message,$headers);
 						header("Location:../index.php?error=success&email=".$email);
 						exit();
 					}
