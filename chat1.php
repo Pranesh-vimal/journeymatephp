@@ -13,14 +13,16 @@ require 'inc/db.php';
 
 if(isset($_POST['submit'])){
     $msg = $_POST['message'];
-    $sql1 = "INSERT INTO chat(jid,pid,userid,msg) VALUES($jid,$pid,$id,'$msg')";
+    $name = $_SESSION['fname']." ".$_SESSION['lname'];
+    $sql1 = "INSERT INTO chat(jid,pid,userid,msg,name) VALUES($jid,$pid,$id,'$msg','$name')";
     mysqli_query($con,$sql1);
     header("location:detail.php?pid=".$pid."&jid=".$jid);
     exit();
 }
 else if(isset($_POST['send'])){
     $msg = $_POST['message'];
-    $sql1 = "INSERT INTO chat(jid,pid,userid,msg) VALUES($jid,$pid,$id,'$msg')";
+    $name = $_SESSION['fname']." ".$_SESSION['lname'];
+    $sql1 = "INSERT INTO chat(jid,pid,userid,msg,name) VALUES($jid,$pid,$id,'$msg','$name')";
     mysqli_query($con,$sql1);
     header("location:profileView.php?id=".$backid);
     exit();

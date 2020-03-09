@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_GET['success'])) {
+if (isset($_SESSION['id'])) {
 	$fname = $_SESSION['fname'];
 	$lname = $_SESSION['lname'];
 	$email = $_SESSION['email'];
@@ -32,9 +32,13 @@ if (isset($_GET['success'])) {
 
 	$result = mysqli_query($con, $sql);
 
-	$rate = "SELECT * from partner where pid=$id";
+	$ratp = "SELECT * from partner where pid=$id and ratep>0";
 
-	$resrate = mysqli_query($con,$rate);
+	$resratp = mysqli_query($con,$ratp);
+
+	$ratj = "SELECT * from partner where pid=$id and ratej>0";
+
+	$resratj = mysqli_query($con,$ratj);
 
 } else {
 	header("location:index.php");
@@ -254,17 +258,22 @@ if (isset($_GET['success'])) {
 			<div class="w3-padding w3-card-4 w3-round-large w3-panel">
 				<div class="w3-panel w3-padding ">
 				<?php
-					if (mysqli_num_rows($resrate)) {
+					if (mysqli_num_rows($resratp)) {
 						$rating1 = 0;
-						$rating2 = 0;
-						while ($rows = mysqli_fetch_assoc($resrate)) {
+						while ($rows = mysqli_fetch_assoc($resratp)) {
 							$rating1 += $rows['ratep'];
+						}
+						$rating1 /= mysqli_num_rows($resratp);
+					} else {
+						$rating1 = 0;
+					}
+					if (mysqli_num_rows($resratj)) {
+						$rating2 = 0;
+						while ($rows = mysqli_fetch_assoc($resratj)) {
 							$rating2 += $rows['ratej'];
 						}
-						$rating1 /= mysqli_num_rows($resrate);
-						$rating2 /= mysqli_num_rows($resrate);
-					}else{
-						$rating1 = 0;
+						$rating2 /= mysqli_num_rows($resratj);
+					} else {
 						$rating2 = 0;
 					}
 					?>

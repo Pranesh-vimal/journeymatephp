@@ -5,7 +5,7 @@
     session_start();
 
     $pid = $_SESSION['pid'];
-    $id = $_SESSION['id'];
+    $id = $_SESSION['cid'];
     $jid = $_SESSION['jid'];
     if(isset($_SESSION['backid'])){
         $backid = $_SESSION['backid'];
@@ -23,7 +23,7 @@
                     <?php
                 }else{
                     ?>
-                    <p class="w3-red w3-left w3-padding w3-round-large">Partner : <?php echo $rows['msg']; ?> &nbsp; &nbsp; <br> <span class="w3-tiny w3-padding"> <?php echo date("d.m.Y g:i A", strtotime($rows['created'])); ?> </span></p>
+                    <p class="w3-red w3-left w3-padding w3-round-large"><?php echo $rows['name']; ?> : <?php echo $rows['msg']; ?> &nbsp; &nbsp; <br> <span class="w3-tiny w3-padding"> <?php echo date("d.m.Y g:i A", strtotime($rows['created'])); ?> </span></>
                     <?php
                 }  ?> 
             </div>

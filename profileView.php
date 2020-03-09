@@ -30,7 +30,7 @@ if (isset($_GET['id'])) {
     $img = $rows['img'];
   }
 
-  $rate = "SELECT * from partner where partid=$_GET[id]";
+  $rate = "SELECT * from partner where partid=$_GET[id] and ratepart>0 ";
 
   $resrate = mysqli_query($con, $rate);
 

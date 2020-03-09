@@ -1,6 +1,6 @@
 <?php
 session_start();
-if (isset($_SESSION['id'])) {
+if (isset($_SESSION['id'])) { //Checking Loged In Or Not
   header("location:prereq.php");
   exit();
 }else if(isset($_SESSION['dash'])){
@@ -16,7 +16,7 @@ if (isset($_SESSION['id'])) {
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="css/style.css">
+  <link rel="stylesheet" href="css/style.css"> // custom css
   <link href="https://fonts.googleapis.com/css?family=Farro&display=swap" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Blinker&display=swap" rel="stylesheet">
   <title>Journey Mate</title>
@@ -54,10 +54,6 @@ if (isset($_SESSION['id'])) {
       display: flex;
       justify-content: center;
       align-items: center;
-    }
-
-    .loader>img {
-      width: 100px;
     }
 
     .loader.hidden {
@@ -158,7 +154,6 @@ if (isset($_SESSION['id'])) {
 
 <body id="index">
   <div class="loader">
-    <!-- <img src="img/831.gif"> -->
     <div class="lds-grid">
       <div></div>
       <div></div>
@@ -176,6 +171,9 @@ if (isset($_SESSION['id'])) {
   ?>
   <?php
   require 'login.php';
+  ?>
+  <?php
+  require 'footer.php';
   ?>
   <script type="text/javascript">
     window.addEventListener("load", function() {

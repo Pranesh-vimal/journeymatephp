@@ -30,15 +30,14 @@ if (isset($_GET['error'])) {
 			<div class="w3-panel w3-padding w3-large w3-hide-small">
 				<section class="w3-text-white">
 					<h3>
-						Choose Your Travel Parter
+						Choose Your Travel Partner
 					</h3>
 				</section>
 			</div>
 		</div>
 
 		<div class="w3-panel w3-third w3-padding w3-card-4 w3-round-large w3-white ">
-			<div class="w3-panel w3-padding w3-center ">
-
+			<div class="w3-panel w3-padding w3-center">
 				<h1 class="w3-padding w3-large w3-text-indigo " id="txthead"><b>Login</b></h1>
 				<form class="w3-container w3-small" method="post" action="inc/login.inc.php">
 					<label class="w3-text-red "><b>Email : &nbsp; &nbsp; &nbsp; &nbsp; </b></label>
@@ -48,9 +47,9 @@ if (isset($_GET['error'])) {
 					<input type="password" name="password" class="w3-panel w3-border w3-center w3-padding w3-round-large w3-border-blue " placeholder="Enter Your Password"><br>
 					<input type="submit" name="login" value="Login" class="w3-center w3-panel w3-padding w3-round-large w3-red w3-button w3-hover-indigo">
 				</form>
-				<div class="w3-center w3-text-blue">
+				<!-- <div class="w3-center w3-text-blue">
 					<a href="forgetpwd.php">Forget Password ?</a>
-				</div>
+				</div> -->
 				<?php
 				if (isset($_GET['error'])) { ?>
 					<div class="w3-container w3-panel w3-center w3-tag w3-red w3-round-large w3-panel w3-small w3-padding">
@@ -65,6 +64,8 @@ if (isset($_GET['error'])) {
 							echo "No Account Found Create An Account *";
 						} elseif ($_GET['error'] == "success") {
 							echo "Login Your Account *";
+						} elseif ($_GET['error'] == "feedback") {
+							echo "Thank You For Your Feedback";
 						}
 					}
 					?>

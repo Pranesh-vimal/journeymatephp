@@ -6,7 +6,7 @@ if (isset($_GET['pid']) && isset($_GET['jid'])) {
 	$pid = $_GET['pid'];
 	$jid = $_GET['jid'];
 	$id = $_SESSION['id'];
-
+	$_SESSION['cid'] = $id;
 	$_SESSION['pid'] = $pid;
 	$_SESSION['jid'] = $jid;
 
@@ -24,9 +24,13 @@ if (isset($_GET['pid']) && isset($_GET['jid'])) {
 	$dt = new DateTime();
 	$dt = $dt->format('Y-m-d H:i:s');
 
-	$rate = "SELECT * from partner where pid=$pid";
+	$ratp = "SELECT * from partner where pid=$pid and ratep>0";
 
-	$resrate = mysqli_query($con, $rate);
+	$resratp = mysqli_query($con, $ratp);
+
+	$ratj = "SELECT * from partner where pid=$pid and ratej>0";
+
+	$resratj = mysqli_query($con, $ratj);
 } else {
 	header("location:index.php");
 	exit();
@@ -236,7 +240,7 @@ if (isset($_GET['pid']) && isset($_GET['jid'])) {
 							$missue = $rows['issue'];
 							$work = $rows['work'];
 							$status = $rows['status'];
-							?>
+					?>
 							<button class="w3-button w3-hover-white" onclick="document.getElementById('id01').style.display='block'">
 								<img id="pro" align="center" src="profile/<?php echo $rows['img']; ?>">
 							</button>
@@ -258,7 +262,7 @@ if (isset($_GET['pid']) && isset($_GET['jid'])) {
 						while ($rows = mysqli_fetch_assoc($result1)) {
 							$age = $rows['age'];
 							$gender = $rows['gender'];
-							?>
+					?>
 							<p class="w3-text-black"><b><?php echo $rows['fname']; ?>&nbsp;<?php echo $rows['lname']; ?></b></p>
 							<p class="w3-text-grey"><b>Native : <span class="w3-text-green"><?php echo $native; ?></span></b></p>
 							<p class="w3-text-grey"><b>Last Seen :<span id="time" class="w3-text-red"><br><?php echo $rows['status']; ?></span></b></p>
@@ -290,36 +294,36 @@ if (isset($_GET['pid']) && isset($_GET['jid'])) {
 						while ($rows = mysqli_fetch_assoc($result2)) {
 							$des = $rows['des'];
 							$amt = $rows['amt'];
-							?>
+					?>
 							<div class="w3-quarter w3-panel w3-padding w3-center">
 								<?php
-										$myvalue1 = $rows['fp'];
-										$arr1 = explode(' ', trim($myvalue1));
-										echo ucwords($arr1[0]); ?>
+								$myvalue1 = $rows['fp'];
+								$arr1 = explode(' ', trim($myvalue1));
+								echo ucwords($arr1[0]); ?>
 							</div>
 							<div class="w3-quarter w3-panel w3-center w3-padding">
 								To
 							</div>
 							<div class="w3-quarter w3-panel w3-padding w3-center">
 								<?php
-										$myvalue2 = $rows['tp'];
-										$arr2 = explode(' ', trim($myvalue2));
-										echo ucwords($arr2[0]); ?>
+								$myvalue2 = $rows['tp'];
+								$arr2 = explode(' ', trim($myvalue2));
+								echo ucwords($arr2[0]); ?>
 							</div>
 							<div class="w3-quarter w3-panel ">
 								<?php
-										if (strtotime($rows['dt']) > strtotime($dt)) {
-											$origDate = $rows['dt'];
-											$date = str_replace('-', '/', $origDate);
-											?>
+								if (strtotime($rows['dt']) > strtotime($dt)) {
+									$origDate = $rows['dt'];
+									$date = str_replace('-', '/', $origDate);
+								?>
 									Time Left : <div data-countdown="<?php echo $date; ?>"></div>
 								<?php
-										} else {
-											?>
+								} else {
+								?>
 									<div class="w3-bold">Have A Safe Journey !</div>
 								<?php
-										}
-										?>
+								}
+								?>
 							</div>
 							<div class="w3-quarter w3-padding w3-center w3-panel">
 								Date : <br> <?php echo date("d.m.Y ", strtotime($rows['dt'])); ?>
@@ -331,36 +335,36 @@ if (isset($_GET['pid']) && isset($_GET['jid'])) {
 								Seats :<br> <?php echo $rows['seat']; ?>
 							</div>
 							<?php
-									if (strtotime($rows['dt']) > strtotime($dt)) {
-										if ($pid != $id) {
-											?>
+							if (strtotime($rows['dt']) > strtotime($dt)) {
+								if ($pid != $id) {
+							?>
 									<div class="w3-quarter w3-panel">
 										<form method="post" action="inc/interest.inc.php?jid=<?php echo $jid; ?>&pid=<?php echo $pid; ?>&id=<?php echo $id; ?>">
 											<input type="submit" name="interest" value="<?php
 
-																										$int = "SELECT * from partner where jid=$jid and pid=$pid and partid=$id";
-																										$resint = mysqli_query($con, $int);
-																										if (mysqli_num_rows($resint) > 0) {
-																											echo "Not Interested";
-																										} else {
-																											echo "Interested";
-																										}
-																										?>" class="w3-button w3-panel w3-padding w3-hover-white w3-hover-text-red w3-round-large w3-white w3-text-blue ">
+																						$int = "SELECT * from partner where jid=$jid and pid=$pid and partid=$id";
+																						$resint = mysqli_query($con, $int);
+																						if (mysqli_num_rows($resint) > 0) {
+																							echo "Not Interested";
+																						} else {
+																							echo "Interested";
+																						}
+																						?>" class="w3-button w3-panel w3-padding w3-hover-white w3-hover-text-red w3-round-large w3-white w3-text-blue ">
 										</form>
 									</div>
 								<?php
-											} else {
-												?>
-									<div class="w3-quarter w3-padding w3-center  w3-panel">
+								} else {
+								?>
+									<div class="w3-quarter w3-padding w3-center w3-panel">
 										<form method="post" action="inc/delete.inc.php?pid=<?php echo $pid; ?>&jid=<?php echo $jid; ?>">
 											<input class="w3-button w3-panel w3-padding w3-hover-white w3-hover-text-red w3-round-large w3-white w3-text-blue " type="submit" name="delete" value="Delete">
 										</form>
 									</div>
 								<?php
-											}
-										} else {
-											if ($pid == $id) {
-												?>
+								}
+							} else {
+								if ($pid == $id) {
+								?>
 									<div class="w3-quarter w3-padding w3-panel">
 										You Cannot Delete !
 									</div>
@@ -396,7 +400,7 @@ if (isset($_GET['pid']) && isset($_GET['jid'])) {
 			</div>
 			<?php
 			if ($des != NULL) {
-				?>
+			?>
 				<div class="w3-padding w3-panel w3-center w3-card-4 w3-round-large">
 					<div class="w3-row w3-padding  w3-light-green w3-round-large w3-text-white">
 						Description : <?php echo $des; ?>
@@ -428,17 +432,22 @@ if (isset($_GET['pid']) && isset($_GET['jid'])) {
 			<div class="w3-padding w3-card-4 w3-round-large ">
 				<div class="w3-panel w3-padding">
 					<?php
-					if (mysqli_num_rows($resrate)) {
+					if (mysqli_num_rows($resratp)) {
 						$rating1 = 0;
-						$rating2 = 0;
-						while ($rows = mysqli_fetch_assoc($resrate)) {
+						while ($rows = mysqli_fetch_assoc($resratp)) {
 							$rating1 += $rows['ratep'];
-							$rating2 += $rows['ratej'];
 						}
-						$rating1 /= mysqli_num_rows($resrate);
-						$rating2 /= mysqli_num_rows($resrate);
+						$rating1 /= mysqli_num_rows($resratp);
 					} else {
 						$rating1 = 0;
+					}
+					if (mysqli_num_rows($resratj)) {
+						$rating2 = 0;
+						while ($rows = mysqli_fetch_assoc($resratj)) {
+							$rating2 += $rows['ratej'];
+						}
+						$rating2 /= mysqli_num_rows($resratj);
+					} else {
 						$rating2 = 0;
 					}
 					?>
@@ -454,35 +463,35 @@ if (isset($_GET['pid']) && isset($_GET['jid'])) {
 			</div>
 			<?php
 			if ($id == $pid) {
-				?>
+			?>
 				<div class="w3-padding w3-center w3-card-4 w3-round-large w3-panel">
 					<h1 class="w3-center w3-text-blue w3-medium">People Interested </h1>
 					<?php
-						$interest1 = "SELECT * from partner where jid=$jid and pid=$pid";
-						$resinter1 = mysqli_query($con, $interest1);
-						if (mysqli_num_rows($resinter1)) {
-							while ($rows = mysqli_fetch_assoc($resinter1)) {
-								$nameid = $rows['partid'];
-								$name = "SELECT * from account where id=$nameid";
-								$resname = mysqli_query($con, $name);
-								while ($row = mysqli_fetch_assoc($resname)) {
-									?>
+					$interest1 = "SELECT * from partner where jid=$jid and pid=$pid";
+					$resinter1 = mysqli_query($con, $interest1);
+					if (mysqli_num_rows($resinter1)) {
+						while ($rows = mysqli_fetch_assoc($resinter1)) {
+							$nameid = $rows['partid'];
+							$name = "SELECT * from account where id=$nameid";
+							$resname = mysqli_query($con, $name);
+							while ($row = mysqli_fetch_assoc($resname)) {
+					?>
 								<div class=" w3-center">
 									<a href="profileView.php?id=<?php echo $nameid; ?>">
 										<p><?php echo $row['fname']; ?> <?php echo $row['lname']; ?></p>
 									</a>
 								</div>
 						<?php
-									}
-								}
-							} else {
-								?>
+							}
+						}
+					} else {
+						?>
 						<div class=" w3-padding w3-center">
 							<p>No One Interested !</p>
 						</div>
 					<?php
-						}
-						?>
+					}
+					?>
 				</div>
 			<?php
 			}
@@ -490,23 +499,23 @@ if (isset($_GET['pid']) && isset($_GET['jid'])) {
 		</div>
 		<?php
 		if ($id != $pid) {
-			?>
+		?>
 			<?php
 
-				$sqlr1 = "SELECT * from journey where pid=$pid and jid=$jid";
+			$sqlr1 = "SELECT * from journey where pid=$pid and jid=$jid";
 
-				$resultr1 = mysqli_query($con, $sqlr1);
+			$resultr1 = mysqli_query($con, $sqlr1);
 
-				if (mysqli_num_rows($resultr1)) {
-					while ($rows = mysqli_fetch_assoc($resultr1)) {
-						if (strtotime($rows['dt']) > strtotime($dt)) {
-							$sqlc = "SELECT * from partner where pid=$pid and jid=$jid and partid=$id";
+			if (mysqli_num_rows($resultr1)) {
+				while ($rows = mysqli_fetch_assoc($resultr1)) {
+					if (strtotime($rows['dt']) > strtotime($dt)) {
+						$sqlc = "SELECT * from partner where pid=$pid and jid=$jid and partid=$id";
 
-							$resultc = mysqli_query($con, $sqlc);
+						$resultc = mysqli_query($con, $sqlc);
 
-							if (mysqli_num_rows($resultc)) {
-								while ($rows = mysqli_fetch_assoc($resultc)) {
-									?>
+						if (mysqli_num_rows($resultc)) {
+							while ($rows = mysqli_fetch_assoc($resultc)) {
+			?>
 								<div class="w3-quarter w3-padding">
 									<div class="w3-padding w3-center w3-card-4 w3-round-large">
 										<h1 class="w3-center w3-text-blue w3-small">
@@ -533,30 +542,30 @@ if (isset($_GET['pid']) && isset($_GET['jid'])) {
 		?>
 		<?php
 		if ($id != $pid) {
-			?>
+		?>
 			<?php
 
-				$sqlr1 = "SELECT * from journey where pid=$pid and jid=$jid";
+			$sqlr1 = "SELECT * from journey where pid=$pid and jid=$jid";
 
-				$resultr1 = mysqli_query($con, $sqlr1);
+			$resultr1 = mysqli_query($con, $sqlr1);
 
-				if (mysqli_num_rows($resultr1)) {
-					while ($rows = mysqli_fetch_assoc($resultr1)) {
-						if (strtotime($rows['dt']) < strtotime($dt)) {
-							?>
+			if (mysqli_num_rows($resultr1)) {
+				while ($rows = mysqli_fetch_assoc($resultr1)) {
+					if (strtotime($rows['dt']) < strtotime($dt)) {
+			?>
 						<div class="w3-quarter w3-padding">
 							<div class="w3-padding w3-center w3-card-4 w3-round-large">
 								<h1 class="w3-center w3-text-blue w3-small">Rate Your Journey !</h1>
 								<div class="w3-panel w3-padding">
 									<?php
-													$ratej = "SELECT * from partner where pid=$pid and jid=$jid and partid=$id";
+									$ratej = "SELECT * from partner where pid=$pid and jid=$jid and partid=$id";
 
-													$resratej = mysqli_query($con, $ratej);
+									$resratej = mysqli_query($con, $ratej);
 
-													if (mysqli_num_rows($resratej)) {
-														while ($rows = mysqli_fetch_assoc($resratej)) {
-															if ($rows['ratej'] == 0) {
-																?>
+									if (mysqli_num_rows($resratej)) {
+										while ($rows = mysqli_fetch_assoc($resratej)) {
+											if ($rows['ratej'] == 0) {
+									?>
 												<form class="w3-padding" action="inc/ratejourney.inc.php?pid=<?php echo $pid; ?>&jid=<?php echo $jid; ?>&partid=<?php echo $id; ?>" method="post">
 													<select class="w3-padding w3-border-white" name="rating">
 														<option value="1">1</option>
@@ -568,35 +577,35 @@ if (isset($_GET['pid']) && isset($_GET['jid'])) {
 													<input type="submit" name="rate" value="Rate" class="w3-button w3-padding w3-text-white w3-red w3-hover-green w3-round-large">
 												</form>
 											<?php
-																	} else {
-																		?>
+											} else {
+											?>
 												<p class="w3-indigo w3-text-white w3-padding w3-round-large">Your Rating : <?php echo $rows['ratej']; ?> </p>
 									<?php
-															}
-														}
-													}
-													?>
+											}
+										}
+									}
+									?>
 									<?php
-													if (isset($_GET['success'])) {
-														if ($_GET['success'] == 'journey') {
-															?>
+									if (isset($_GET['success'])) {
+										if ($_GET['success'] == 'journey') {
+									?>
 											<p class="w3-indigo w3-text-white w3-padding w3-round-large">Thanks For Your Rating About Journey !</p>
 									<?php
-														}
-													}
-													?>
+										}
+									}
+									?>
 								</div>
 								<h1 class="w3-center w3-text-blue w3-small">Rate Your Partner !</h1>
 								<div class="w3-panel w3-padding">
 									<?php
-													$ratep = "SELECT * from partner where pid=$pid and jid=$jid and partid=$id";
+									$ratep = "SELECT * from partner where pid=$pid and jid=$jid and partid=$id";
 
-													$resratep = mysqli_query($con, $ratep);
+									$resratep = mysqli_query($con, $ratep);
 
-													if (mysqli_num_rows($resratep)) {
-														while ($rows = mysqli_fetch_assoc($resratep)) {
-															if ($rows['ratep'] == 0) {
-																?>
+									if (mysqli_num_rows($resratep)) {
+										while ($rows = mysqli_fetch_assoc($resratep)) {
+											if ($rows['ratep'] == 0) {
+									?>
 												<form class="w3-padding" action="inc/ratepartner.inc.php?pid=<?php echo $pid; ?>&jid=<?php echo $jid; ?>&partid=<?php echo $id; ?>" method="post">
 													<select class="w3-padding w3-border-white" name="rating">
 														<option value="1">1</option>
@@ -608,23 +617,23 @@ if (isset($_GET['pid']) && isset($_GET['jid'])) {
 													<input type="submit" name="rate" value="Rate" class="w3-button w3-padding w3-text-white w3-red w3-hover-green w3-round-large">
 												</form>
 											<?php
-																	} else {
-																		?>
+											} else {
+											?>
 												<p class="w3-indigo w3-text-white w3-padding w3-round-large">Your Rating : <?php echo $rows['ratep']; ?> </p>
 									<?php
-															}
-														}
-													}
-													?>
+											}
+										}
+									}
+									?>
 									<?php
-													if (isset($_GET['success'])) {
-														if ($_GET['success'] == 'partner') {
-															?>
+									if (isset($_GET['success'])) {
+										if ($_GET['success'] == 'partner') {
+									?>
 											<p class="w3-indigo w3-text-white w3-padding w3-round-large">Thanks For Your Rating About Partner !</p>
 									<?php
-														}
-													}
-													?>
+										}
+									}
+									?>
 								</div>
 							</div>
 						</div>
